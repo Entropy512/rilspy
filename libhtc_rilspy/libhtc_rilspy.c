@@ -92,7 +92,8 @@ static void s_onCancel(RIL_Token t)
 	h_radiofunctions->onCancel(t);
 }
 
-char smdbuf[8192], ptybuf[8192];
+static char smdbuf[8192], ptybuf[8192];
+
 static void *s_readsmd(void *p)
 {
 	int count;
@@ -126,6 +127,7 @@ const RIL_RadioFunctions *RIL_Init(const struct RIL_Env *env, int argc, char **a
 	int i;
 	pthread_attr_t attr;
 	pthread_t tid;
+	pid_t pid;
 	char *pt_name;
 	struct termios ts;
 
@@ -141,21 +143,6 @@ const RIL_RadioFunctions *RIL_Init(const struct RIL_Env *env, int argc, char **a
 	if (!h_RIL_Init)
 		return NULL;
 
-	if (access("/dev/smd00", F_OK)) {
-		pid_t pid = fork();
-		if (pid == 0) {
-			execl("/system/lib/rilspy_helper", "rilspy_helper", NULL);
-		} else {
-			waitpid(pid, NULL, 0);
-		}
-#if 0
-		/* Done in wrapper_helper now */
-		rename("/dev/smd0", "/dev/smd00");
-		mknod("/dev/smd0", S_IFIFO|0640, 0);
-#endif
-	}
-
-#if 0
 	p_fd = open("/dev/ptmx", O_RDWR);
 	pt_name = ptsname(p_fd);
 	grantpt(p_fd);
@@ -167,12 +154,13 @@ const RIL_RadioFunctions *RIL_Init(const struct RIL_Env *env, int argc, char **a
 	ts.c_cflag |= CS8;
 	tcsetattr(p_fd, TCSANOW, &ts);
 
-	symlink(pt_name,"/dev/smd0");
-	chmod("/dev/smd0", 0666);
-#endif
-
+	pid = fork();
+	if (pid == 0) {
+		execl("/system/lib/rilspy_helper", "rilspy_helper", pt_name, NULL);
+	} else {
+		waitpid(pid, NULL, 0);
+	}
 	s_fd = open("/dev/smd00", O_RDWR);
-	p_fd = open("/dev/smd0", O_RDWR);
 
 	pthread_attr_init(&attr);
 	pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
