@@ -1,0 +1,21 @@
+This is a wrapper for the Android libhtc_ril.so which intercepts all command
+traffic between the library and the cell modem for logging. The log messages
+can be retrieved using "logcat -b radio".
+
+The wrapper has two pieces: the shared library, and a helper program. Both
+of these files should be installed in /system/lib. As installed, things must
+look like this:
+
+-rw-r--r--    1 root     root          5340 Mar 27 10:25 /system/lib/libhtc_rilspy.so
+-rwsr-x---    1 root     radio         5388 Mar 27 10:17 /system/lib/rilspy_helper
+
+That is, the helper program must be owned by root, group radio, and setuid root.
+
+To invoke it, edit /system/build.prop and change the rild property:
+
+#rild.libpath=/system/lib/libhtc_ril.so
+rild.libpath=/system/lib/libhtc_rilspy.so
+
+(Comment out the old one and add the new one)
+
+Then reboot.
