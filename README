@@ -1,6 +1,6 @@
 This is a wrapper for the Android libhtc_ril.so which intercepts all command
 traffic between the library and the cell modem for logging. The log messages
-can be retrieved using "logcat -b radio".
+can be retrieved using "logcat -b radio -v time".
 
 The wrapper has two pieces: the shared library, and a helper program. Both
 of these files should be installed in /system/lib. As installed, things must
@@ -18,4 +18,11 @@ rild.libpath=/system/lib/libhtc_rilspy.so
 
 (Comment out the old one and add the new one)
 
-Then reboot.
+Then reboot. Start up "adb logcat -b radio -v time" as early as possible
+so the complete log can be obtained from the beginning of the boot process.
+
+Run thru various actions - leave the phone idle for a minute or two, wake it up
+(screen on), let it sleep (screen off). Toggle 2G/3G, toggle data on and off. (leave
+some time between each of these steps.) Send an SMS, receive an SMS. I think
+that covers the actions we need logged. For completeness' sake, make a voice call,
+and answer a voice call too.
