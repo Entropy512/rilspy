@@ -10,6 +10,10 @@ look like this:
 -rwsr-x---    1 root     radio         5388 Mar 27 10:17 /system/lib/rilspy_helper
 
 That is, the helper program must be owned by root, group radio, and setuid root.
+From a terminal session on the phone you can set the helper permissions by
+
+	chown root radio /system/lib/rilspy_helper
+	chmod 4750 /system/lib/rilspy_helper
 
 To invoke it, edit /system/build.prop and change the rild property:
 
