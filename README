@@ -34,3 +34,9 @@ and answer a voice call too.
 This is based on Howard Chu's rilspy for HTC devices located at
 https://gitorious.org/rilspy/rilspy, modified for use with Samsung GalaxyS series
 phones.
+
+Build Instructions:
+If you already have an AOSP or CyanogenMod build tree, do the following:
+1)  Execute '. build/envsetup.s' from the top of the build tree
+2)  export TOP=<top of build tree>
+3)  Enter each module subdirectory and run 'mm'
