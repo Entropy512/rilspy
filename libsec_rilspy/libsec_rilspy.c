@@ -97,6 +97,7 @@ static char smdbuf[8192], ptybuf[8192];
 static void *s_readsmd(void *p)
 {
 	int count;
+	LOGD("s_readsmd started");
 	do {
 		count = read(s_fd, smdbuf, sizeof(smdbuf));
 		if (count <= 0)
@@ -110,6 +111,7 @@ static void *s_readsmd(void *p)
 static void *s_readpty(void *p)
 {
 	int count;
+	LOGD("s_readpty started");
 	do {
 		count = read(p_fd, ptybuf, sizeof(ptybuf));
 		if (count <= 0)
@@ -145,6 +147,7 @@ const RIL_RadioFunctions *RIL_Init(const struct RIL_Env *env, int argc, char **a
 
 	p_fd = open("/dev/ptmx", O_RDWR);
 	pt_name = ptsname(p_fd);
+	LOGD("pt_name = %s\n",pt_name);
 	grantpt(p_fd);
 	unlockpt(p_fd);
 	tcgetattr(p_fd, &ts);
