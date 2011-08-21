@@ -156,7 +156,7 @@ const RIL_RadioFunctions *RIL_Init(const struct RIL_Env *env, int argc, char **a
 
 	pid = fork();
 	if (pid == 0) {
-		execl("/system/lib/rilspy_helper", "rilspy_helper", pt_name, NULL);
+		execl("/system/bin/rilspy_helper", "rilspy_helper", pt_name, NULL);
 	} else {
 		waitpid(pid, NULL, 0);
 	}
