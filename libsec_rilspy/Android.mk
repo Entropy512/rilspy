@@ -4,7 +4,7 @@ LOCAL_PATH:= $(call my-dir)
 include $(CLEAR_VARS)
 
 LOCAL_SRC_FILES:= \
-    libhtc_rilspy.c
+    libsec_rilspy.c
 
 LOCAL_SHARED_LIBRARIES := \
     libcutils libril
@@ -21,12 +21,12 @@ ifeq (foo,foo)
       libdl
   LOCAL_LDLIBS += -lpthread -ldl
   LOCAL_CFLAGS += -DRIL_SHLIB
-  LOCAL_MODULE:= libhtc_rilspy
+  LOCAL_MODULE:= libsec_rilspy
   include $(BUILD_SHARED_LIBRARY)
 else
   #build executable
   LOCAL_SHARED_LIBRARIES += \
       libril libdl
-  LOCAL_MODULE:= libhtc_ril_wrapper
+  LOCAL_MODULE:= libsec_ril_wrapper
   include $(BUILD_EXECUTABLE)
 endif

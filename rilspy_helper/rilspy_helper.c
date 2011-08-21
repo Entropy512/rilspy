@@ -7,8 +7,8 @@
 #define RADIO_ID	1001
 
 int main(int argc, char *argv[]) {
-	if (access("/dev/smd00", F_OK))
-		rename("/dev/smd0", "/dev/smd00");
-	symlink(argv[1], "/dev/smd0");
+	if (access("/dev/ttyS00", F_OK))
+		rename("/dev/ttyS0", "/dev/ttyS00");
+	symlink(argv[1], "/dev/ttyS0");
 	return 0;
 }

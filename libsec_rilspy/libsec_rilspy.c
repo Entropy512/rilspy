@@ -136,7 +136,7 @@ const RIL_RadioFunctions *RIL_Init(const struct RIL_Env *env, int argc, char **a
 	for (i=0; i<argc; i++)
 		LOGD(" \"%s\"\n", argv[i]);
 
-	h_lib=dlopen("/system/lib/libhtc_ril.so", 0);
+	h_lib=dlopen("/system/lib/libsec-ril.so", 0);
 	if (!h_lib)
 		return NULL;
 	h_RIL_Init = dlsym(h_lib, "RIL_Init");
@@ -160,7 +160,7 @@ const RIL_RadioFunctions *RIL_Init(const struct RIL_Env *env, int argc, char **a
 	} else {
 		waitpid(pid, NULL, 0);
 	}
-	s_fd = open("/dev/smd00", O_RDWR);
+	s_fd = open("/dev/ttyS00", O_RDWR);
 
 	pthread_attr_init(&attr);
 	pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
