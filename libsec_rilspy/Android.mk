@@ -15,6 +15,8 @@ LOCAL_CFLAGS := -D_GNU_SOURCE
 LOCAL_PRELINK_MODULE := false
 LOCAL_C_INCLUDES := $(KERNEL_HEADERS)
 
+LOCAL_MODULE_TAGS := optional
+
 ifeq (foo,foo)
   #build shared library
   LOCAL_SHARED_LIBRARIES += \
